@@ -76,7 +76,7 @@ int HX711::read()
     waitReady();
 
     // next steps are timing-dependents
-    core_util_critical_section_enter();
+    CriticalSectionLock::enable();
 
     for (uint8_t i = 24; i--;)
     {
@@ -99,7 +99,7 @@ int HX711::read()
     }
 
     // reading done
-    core_util_critical_section_exit();
+    CriticalSectionLock::disable();
 
     // set sign
     if (buffer & 0x800000)
