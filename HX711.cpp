@@ -27,7 +27,7 @@
 #include "HX711.h"
 #include "mbed.h"
 
-HX711::HX711(PinName pinData, PinName pinSck, uint8_t gain) : _scale(1.0f)
+HX711::HX711(PinName pinData, PinName pinSck, uint8_t gain) : _offset(0), _scale(1.0f)
 {
     _pinData = pinData;
     _pinSck = pinSck;
@@ -36,11 +36,6 @@ HX711::HX711(PinName pinData, PinName pinSck, uint8_t gain) : _scale(1.0f)
 
     DigitalOut sck(_pinSck);
     DigitalIn data(_pinData);
-
-    // Init HX711
-    sck = 1;
-    wait_us(100);
-    sck = 0;
 }
 
 HX711::~HX711()
@@ -130,8 +125,8 @@ void HX711::setScale(float scale)
 
 float HX711::getUnits(uint8_t times)
 {
-    long val = (readAverage(times) - _offset);
-    return (float)val / _scale;
+    double val = readAverage(times) - _offset;
+    return val / _scale;
 }
 
 void HX711::setGain(uint8_t gain)
