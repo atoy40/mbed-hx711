@@ -113,6 +113,19 @@ void HX711::waitReady(int delay_ms)
     }
 }
 
+bool HX711::waitReadyRetry(int retries, int delay_ms) {
+	int count = 0;
+	while (count < retries) {
+		if (isReady()) {
+            printf("retry=%d\n", count);
+			return true;
+		}
+		wait_ms(delay_ms);
+		count++;
+	}
+	return false;
+}
+
 void HX711::setOffset(int offset)
 {
     _offset = offset;

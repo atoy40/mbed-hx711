@@ -57,6 +57,7 @@ class HX711
     bool isReady();
     int read(void);
     void waitReady(int delay_ms = 0);
+    bool waitReadyRetry(int retries = 5, int delay_ms = 0);
     int readAverage(uint8_t times = 10);
     void setOffset(int offset);
     void setScale(float scale);
