@@ -109,7 +109,7 @@ void HX711::waitReady(int delay_ms)
 {
     while (!isReady())
     {
-        wait_ms(delay_ms);
+        wait_us(delay_ms*1000);
     }
 }
 
@@ -119,7 +119,7 @@ bool HX711::waitReadyRetry(int retries, int delay_ms) {
             if (isReady()) {
                 return true;
             }
-            wait_ms(delay_ms);
+            wait_us(delay_ms*1000);
             count++;
         }
     return false;
